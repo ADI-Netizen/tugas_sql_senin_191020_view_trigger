@@ -1,0 +1,309 @@
+/*
+SQLyog Ultimate v11.11 (64 bit)
+MySQL - 5.5.5-10.1.38-MariaDB : Database - day26
+*********************************************************************
+*/
+
+/*!40101 SET NAMES utf8 */;
+
+/*!40101 SET SQL_MODE=''*/;
+
+/*!40014 SET @OLD_UNIQUE_CHECKS=@@UNIQUE_CHECKS, UNIQUE_CHECKS=0 */;
+/*!40014 SET @OLD_FOREIGN_KEY_CHECKS=@@FOREIGN_KEY_CHECKS, FOREIGN_KEY_CHECKS=0 */;
+/*!40101 SET @OLD_SQL_MODE=@@SQL_MODE, SQL_MODE='NO_AUTO_VALUE_ON_ZERO' */;
+/*!40111 SET @OLD_SQL_NOTES=@@SQL_NOTES, SQL_NOTES=0 */;
+CREATE DATABASE /*!32312 IF NOT EXISTS*/`day26` /*!40100 DEFAULT CHARACTER SET latin1 */;
+
+USE `day26`;
+
+/*Table structure for table `mahasiswa` */
+
+DROP TABLE IF EXISTS `mahasiswa`;
+
+CREATE TABLE `mahasiswa` (
+  `nim` char(8) NOT NULL,
+  `nama` varchar(50) DEFAULT NULL,
+  `asal` varchar(50) DEFAULT NULL,
+  `jurusan` varchar(50) DEFAULT NULL,
+  `nilai_uan` decimal(5,2) DEFAULT NULL,
+  PRIMARY KEY (`nim`)
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
+/*Data for the table `mahasiswa` */
+
+insert  into `mahasiswa`(`nim`,`nama`,`asal`,`jurusan`,`nilai_uan`) values ('17080225','Husli Khairan','Jakarta','Akuntansi',288.55),('17080305','Rina Kumala Sari','Jakarta','Akuntansi',337.99),('17090113','Riana Putria','Padang','Kimia',339.20),('17140119','Sandri Fatmala','Bandung','Ilmu Komputer',322.91),('17140120','Bobby Permana','Medan','Ilmu Komputer',280.82),('17140133','Ikhsan Prayoga','Jakarta','Ilmu Komputer',300.16),('17140143','Rudi Permana','Bandung','Ilmu Komputer',290.44);
+
+/*Table structure for table `nilai_mahasiswa` */
+
+DROP TABLE IF EXISTS `nilai_mahasiswa`;
+
+CREATE TABLE `nilai_mahasiswa` (
+  `nim` char(8) NOT NULL,
+  `nama` varchar(50) DEFAULT NULL,
+  `semester_1` decimal(4,2) DEFAULT NULL,
+  `semester_2` decimal(4,2) DEFAULT NULL,
+  `semester_3` decimal(4,2) DEFAULT NULL,
+  PRIMARY KEY (`nim`)
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
+/*Data for the table `nilai_mahasiswa` */
+
+insert  into `nilai_mahasiswa`(`nim`,`nama`,`semester_1`,`semester_2`,`semester_3`) values ('13411770','Adi Fauzi',3.21,3.25,3.31),('17080305','Rina Kumala Sari',3.45,2.56,3.67),('17090113','Riana Putria',3.12,2.98,3.45),('17090308','Christine Wijaya',3.78,3.23,3.11),('17140119','Sandri Fatmala',2.12,2.78,2.56),('17140143','Rudi Permana',2.56,3.14,3.22);
+
+/*Table structure for table `tbl_barang` */
+
+DROP TABLE IF EXISTS `tbl_barang`;
+
+CREATE TABLE `tbl_barang` (
+  `id_barang` varchar(100) NOT NULL,
+  `nama_barang` varchar(100) DEFAULT NULL,
+  `harga` float DEFAULT NULL,
+  `stock` int(11) DEFAULT NULL,
+  `id_jenis` varchar(100) DEFAULT NULL,
+  PRIMARY KEY (`id_barang`)
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
+/*Data for the table `tbl_barang` */
+
+insert  into `tbl_barang`(`id_barang`,`nama_barang`,`harga`,`stock`,`id_jenis`) values ('1','Gelas',10000,3,'1'),('2','Piring',12000,7,'1');
+
+/*Table structure for table `tbl_ipk` */
+
+DROP TABLE IF EXISTS `tbl_ipk`;
+
+CREATE TABLE `tbl_ipk` (
+  `nim` varchar(70) NOT NULL,
+  `nilai_ipk` decimal(4,2) DEFAULT NULL,
+  PRIMARY KEY (`nim`)
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
+/*Data for the table `tbl_ipk` */
+
+insert  into `tbl_ipk`(`nim`,`nilai_ipk`) values ('13411770',3.26);
+
+/*Table structure for table `tbl_jenis` */
+
+DROP TABLE IF EXISTS `tbl_jenis`;
+
+CREATE TABLE `tbl_jenis` (
+  `id` varchar(100) NOT NULL,
+  `nama` varchar(100) DEFAULT NULL,
+  `katerangan` text,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
+/*Data for the table `tbl_jenis` */
+
+insert  into `tbl_jenis`(`id`,`nama`,`katerangan`) values ('1','Pecah Belah','Barang Pecah Belah');
+
+/*Table structure for table `tbl_penjualan` */
+
+DROP TABLE IF EXISTS `tbl_penjualan`;
+
+CREATE TABLE `tbl_penjualan` (
+  `faktur` varchar(100) NOT NULL,
+  `id` varchar(100) DEFAULT NULL,
+  `jumlah` int(11) DEFAULT NULL,
+  `tanggal_transaksi` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+  PRIMARY KEY (`faktur`)
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
+/*Data for the table `tbl_penjualan` */
+
+insert  into `tbl_penjualan`(`faktur`,`id`,`jumlah`,`tanggal_transaksi`) values ('1','1',2,'2020-10-19 11:03:21'),('2','2',5,'2020-10-19 11:03:50');
+
+/*Table structure for table `universitas` */
+
+DROP TABLE IF EXISTS `universitas`;
+
+CREATE TABLE `universitas` (
+  `jurusan` varchar(20) NOT NULL,
+  `tgl_berdiri` date DEFAULT NULL,
+  `nama_dekan` varchar(50) DEFAULT NULL,
+  `jum_mhs` smallint(5) unsigned DEFAULT NULL,
+  `akr` enum('A','B','C','N/A') DEFAULT NULL,
+  PRIMARY KEY (`jurusan`)
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
+/*Data for the table `universitas` */
+
+insert  into `universitas`(`jurusan`,`tgl_berdiri`,`nama_dekan`,`jum_mhs`,`akr`) values ('Akuntansi','1985-03-19','Maya Fitrianti, M.M.',895,'B'),('Farmasi','1997-05-30','Prof. Silvia Nst, M.Farm.',312,'C'),('Fisika','1989-12-10','Dr. Umar Agustinus, M.Sc.',275,'A'),('Hukum','1983-08-08','Prof. Gunarto, M.H.',754,'B'),('Ilmu Komputer','2003-02-23','Dr. Syahrial, M.Kom.',412,'A'),('Kimia','1987-07-12','Prof. Mulyono, M.Sc.',662,'B');
+
+/* Trigger structure for table `nilai_mahasiswa` */
+
+DELIMITER $$
+
+/*!50003 DROP TRIGGER*//*!50032 IF EXISTS */ /*!50003 `ipk` */$$
+
+/*!50003 CREATE */ /*!50017 DEFINER = 'root'@'localhost' */ /*!50003 TRIGGER `ipk` AFTER INSERT ON `nilai_mahasiswa` FOR EACH ROW BEGIN
+	insert into tbl_ipk value (new.nim, round(((new.semester_1+new.semester_2+new.semester_3)/3),2));
+    END */$$
+
+
+DELIMITER ;
+
+/* Trigger structure for table `tbl_penjualan` */
+
+DELIMITER $$
+
+/*!50003 DROP TRIGGER*//*!50032 IF EXISTS */ /*!50003 `tgr` */$$
+
+/*!50003 CREATE */ /*!50017 DEFINER = 'root'@'localhost' */ /*!50003 TRIGGER `tgr` AFTER INSERT ON `tbl_penjualan` FOR EACH ROW BEGIN
+	update tbl_barang a set a.stock = a.stock - new.jumlah where a.id_barang = new.id;
+    END */$$
+
+
+DELIMITER ;
+
+/*Table structure for table `detail_mahasiswa` */
+
+DROP TABLE IF EXISTS `detail_mahasiswa`;
+
+/*!50001 DROP VIEW IF EXISTS `detail_mahasiswa` */;
+/*!50001 DROP TABLE IF EXISTS `detail_mahasiswa` */;
+
+/*!50001 CREATE TABLE  `detail_mahasiswa`(
+ `NIM` char(8) ,
+ `Nama` varchar(50) ,
+ `Jurusan` varchar(50) 
+)*/;
+
+/*Table structure for table `detail_mahasiswa2` */
+
+DROP TABLE IF EXISTS `detail_mahasiswa2`;
+
+/*!50001 DROP VIEW IF EXISTS `detail_mahasiswa2` */;
+/*!50001 DROP TABLE IF EXISTS `detail_mahasiswa2` */;
+
+/*!50001 CREATE TABLE  `detail_mahasiswa2`(
+ `nim` char(8) ,
+ `nama` varchar(50) ,
+ `jurusan` varchar(50) ,
+ `nama_dekan` varchar(50) ,
+ `akr` enum('A','B','C','N/A') 
+)*/;
+
+/*Table structure for table `detail_total` */
+
+DROP TABLE IF EXISTS `detail_total`;
+
+/*!50001 DROP VIEW IF EXISTS `detail_total` */;
+/*!50001 DROP TABLE IF EXISTS `detail_total` */;
+
+/*!50001 CREATE TABLE  `detail_total`(
+ `id_barang` varchar(100) ,
+ `nama_barang` varchar(100) ,
+ `harga` float ,
+ `stock` int(11) ,
+ `total` varchar(63) ,
+ `id` varchar(100) ,
+ `nama` varchar(100) 
+)*/;
+
+/*Table structure for table `ipk_mhs` */
+
+DROP TABLE IF EXISTS `ipk_mhs`;
+
+/*!50001 DROP VIEW IF EXISTS `ipk_mhs` */;
+/*!50001 DROP TABLE IF EXISTS `ipk_mhs` */;
+
+/*!50001 CREATE TABLE  `ipk_mhs`(
+ `Nim` char(8) ,
+ `Nama` varchar(50) ,
+ `ipk` decimal(7,2) 
+)*/;
+
+/*Table structure for table `ipk_mhs2` */
+
+DROP TABLE IF EXISTS `ipk_mhs2`;
+
+/*!50001 DROP VIEW IF EXISTS `ipk_mhs2` */;
+/*!50001 DROP TABLE IF EXISTS `ipk_mhs2` */;
+
+/*!50001 CREATE TABLE  `ipk_mhs2`(
+ `Nama dan IPK` varchar(62) 
+)*/;
+
+/*Table structure for table `laporan_barang` */
+
+DROP TABLE IF EXISTS `laporan_barang`;
+
+/*!50001 DROP VIEW IF EXISTS `laporan_barang` */;
+/*!50001 DROP TABLE IF EXISTS `laporan_barang` */;
+
+/*!50001 CREATE TABLE  `laporan_barang`(
+ `id_barang` varchar(100) ,
+ `nama_barang` varchar(100) ,
+ `harga` float ,
+ `id_jenis` varchar(100) ,
+ `nama` varchar(100) 
+)*/;
+
+/*Table structure for table `laporan_barang2` */
+
+DROP TABLE IF EXISTS `laporan_barang2`;
+
+/*!50001 DROP VIEW IF EXISTS `laporan_barang2` */;
+/*!50001 DROP TABLE IF EXISTS `laporan_barang2` */;
+
+/*!50001 CREATE TABLE  `laporan_barang2`(
+ `id_barang` varchar(100) ,
+ `nama_barang` varchar(100) ,
+ `harga` float ,
+ `id_jenis` varchar(100) ,
+ `nama` varchar(100) 
+)*/;
+
+/*View structure for view detail_mahasiswa */
+
+/*!50001 DROP TABLE IF EXISTS `detail_mahasiswa` */;
+/*!50001 DROP VIEW IF EXISTS `detail_mahasiswa` */;
+
+/*!50001 CREATE ALGORITHM=UNDEFINED DEFINER=`root`@`localhost` SQL SECURITY DEFINER VIEW `detail_mahasiswa` AS (select `mahasiswa`.`nim` AS `NIM`,`mahasiswa`.`nama` AS `Nama`,`mahasiswa`.`jurusan` AS `Jurusan` from `mahasiswa`) */;
+
+/*View structure for view detail_mahasiswa2 */
+
+/*!50001 DROP TABLE IF EXISTS `detail_mahasiswa2` */;
+/*!50001 DROP VIEW IF EXISTS `detail_mahasiswa2` */;
+
+/*!50001 CREATE ALGORITHM=UNDEFINED DEFINER=`root`@`localhost` SQL SECURITY DEFINER VIEW `detail_mahasiswa2` AS (select `mahasiswa`.`nim` AS `nim`,`mahasiswa`.`nama` AS `nama`,`mahasiswa`.`jurusan` AS `jurusan`,`universitas`.`nama_dekan` AS `nama_dekan`,`universitas`.`akr` AS `akr` from (`mahasiswa` join `universitas` on((`mahasiswa`.`jurusan` = `universitas`.`jurusan`)))) */;
+
+/*View structure for view detail_total */
+
+/*!50001 DROP TABLE IF EXISTS `detail_total` */;
+/*!50001 DROP VIEW IF EXISTS `detail_total` */;
+
+/*!50001 CREATE ALGORITHM=UNDEFINED DEFINER=`root`@`localhost` SQL SECURITY DEFINER VIEW `detail_total` AS (select `tbl_barang`.`id_barang` AS `id_barang`,`tbl_barang`.`nama_barang` AS `nama_barang`,`tbl_barang`.`harga` AS `harga`,`tbl_barang`.`stock` AS `stock`,format((`tbl_barang`.`harga` * `tbl_barang`.`stock`),0) AS `total`,`tbl_jenis`.`id` AS `id`,`tbl_jenis`.`nama` AS `nama` from (`tbl_barang` join `tbl_jenis` on((`tbl_barang`.`id_jenis` = `tbl_jenis`.`id`)))) */;
+
+/*View structure for view ipk_mhs */
+
+/*!50001 DROP TABLE IF EXISTS `ipk_mhs` */;
+/*!50001 DROP VIEW IF EXISTS `ipk_mhs` */;
+
+/*!50001 CREATE ALGORITHM=UNDEFINED DEFINER=`root`@`localhost` SQL SECURITY DEFINER VIEW `ipk_mhs` AS (select `nilai_mahasiswa`.`nim` AS `Nim`,`nilai_mahasiswa`.`nama` AS `Nama`,round((((`nilai_mahasiswa`.`semester_1` + `nilai_mahasiswa`.`semester_2`) + `nilai_mahasiswa`.`semester_3`) / 3),2) AS `ipk` from `nilai_mahasiswa`) */;
+
+/*View structure for view ipk_mhs2 */
+
+/*!50001 DROP TABLE IF EXISTS `ipk_mhs2` */;
+/*!50001 DROP VIEW IF EXISTS `ipk_mhs2` */;
+
+/*!50001 CREATE ALGORITHM=UNDEFINED DEFINER=`root`@`localhost` SQL SECURITY DEFINER VIEW `ipk_mhs2` AS (select concat(`ipk_mhs`.`Nama`,' ','(',`ipk_mhs`.`ipk`,')') AS `Nama dan IPK` from `ipk_mhs` order by `ipk_mhs`.`ipk` desc) */;
+
+/*View structure for view laporan_barang */
+
+/*!50001 DROP TABLE IF EXISTS `laporan_barang` */;
+/*!50001 DROP VIEW IF EXISTS `laporan_barang` */;
+
+/*!50001 CREATE ALGORITHM=UNDEFINED DEFINER=`root`@`localhost` SQL SECURITY DEFINER VIEW `laporan_barang` AS (select `tbl_barang`.`id_barang` AS `id_barang`,`tbl_barang`.`nama_barang` AS `nama_barang`,`tbl_barang`.`harga` AS `harga`,`tbl_barang`.`id_jenis` AS `id_jenis`,`tbl_jenis`.`nama` AS `nama` from (`tbl_jenis` join `tbl_barang` on((`tbl_jenis`.`id` = `tbl_barang`.`id_jenis`)))) */;
+
+/*View structure for view laporan_barang2 */
+
+/*!50001 DROP TABLE IF EXISTS `laporan_barang2` */;
+/*!50001 DROP VIEW IF EXISTS `laporan_barang2` */;
+
+/*!50001 CREATE ALGORITHM=UNDEFINED DEFINER=`root`@`localhost` SQL SECURITY DEFINER VIEW `laporan_barang2` AS (select `tbl_barang`.`id_barang` AS `id_barang`,`tbl_barang`.`nama_barang` AS `nama_barang`,`tbl_barang`.`harga` AS `harga`,`tbl_barang`.`id_jenis` AS `id_jenis`,`tbl_jenis`.`nama` AS `nama` from (`tbl_jenis` join `tbl_barang` on((`tbl_jenis`.`id` = `tbl_barang`.`id_jenis`)))) */;
+
+/*!40101 SET SQL_MODE=@OLD_SQL_MODE */;
+/*!40014 SET FOREIGN_KEY_CHECKS=@OLD_FOREIGN_KEY_CHECKS */;
+/*!40014 SET UNIQUE_CHECKS=@OLD_UNIQUE_CHECKS */;
+/*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
